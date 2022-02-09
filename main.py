@@ -47,5 +47,51 @@ def img():
             </html>"""
 
 
+@app.route('/promotion_image')
+def promotion_image():
+    return """<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Привет, Марс!</title>
+    <link rel="stylesheet" type="text/css" href="{url_for('static', filename='css/style.css')}" />
+    <link 
+        rel="stylesheet" 
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
+        crossorigin="anonymous">
+</head>
+<body>
+    <h1>Жди нас, Марс!</h1>
+    <figure>
+        <img 
+            src='/static/img/MARS.png' 
+            alt="здесь должна была быть картинка, но не нашлась">
+        <figcaption>
+          "Вот она какая, красная планета"
+        </figcaption>
+    </figure>
+    <div class="alert alert-dark" role="alert">
+        Человечество вырастает из детства.
+    </div>
+    <div class="alert alert-success" role="alert">
+        Человечеству мала одна планета.
+    </div>
+    <div class="alert alert-secondary" role="alert">
+        Мы сделаем обитаемыми безжизненные пока планеты.
+    </div>
+    <div class="alert alert-warning" role="alert">
+        И начнем с Марса!
+    </div>
+    <div class="alert alert-danger" role="alert">
+        Присоединяйся!
+    </div>
+    
+</body>
+</html>"""
+
+
 if __name__ == '__main__':
     app.run(port=8080, host='127.0.0.1')
