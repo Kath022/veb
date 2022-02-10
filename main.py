@@ -6,8 +6,12 @@ app = Flask(__name__)
 @app.route('/<title>')
 @app.route('/index/<title>')
 def index(title):
-    print(title)
     return render_template('template.html', title=title)
+
+
+@app.route('/training/<prof>')
+def training(prof):
+    return render_template('engineer.html', title='Name', prof=prof)
 
 
 if __name__ == '__main__':

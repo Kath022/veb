@@ -1,0 +1,15 @@
+{% extends "template.html" %}
+
+{% block simulators %}
+    {% if 'инженер' in prof %} 
+        <h2>Инженерные тренажеры</h2>
+        <img src="/static/img/trainings_engineer.png" alt="здесь должна была быть картинка, но не нашлась1">
+    {% elif 'строитель' in prof %}
+        <h2>Научные симуляторы</h2>
+        <img src="/static/img/trainings_scientists.png" alt="здесь должна была быть картинка, но не нашлась1">
+    {% else %}
+        <h2>Другое</h2>
+        <img src="/static/img/trainings0.png" alt="здесь должна была быть картинка, но не нашлась1">
+    {% endif %}
+{% endblock %}
+
