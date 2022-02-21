@@ -1,0 +1,24 @@
+{% extends "template.html" %}
+
+{% block simulators %}
+    {% set data = ['surname',
+        'name',
+        'education',
+        'profession',
+        'sex',
+        'motivation',
+        'ready'] %}
+    {% set data_title = ['Фамилия:',
+        'Имя:',
+        'Образование:',
+        'Профессия:',
+        'Пол:',
+        'Моливация:',
+        'Готовы остаться на Марсе?']%}
+
+
+    {% for one in data_title %}
+        <p class="data_pers">{{one}} {{autor_answer_data[data[loop.index0]]}}</p>
+    {% endfor %}
+
+{% endblock %}
