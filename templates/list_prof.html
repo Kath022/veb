@@ -1,0 +1,30 @@
+{% extends "template.html" %}
+
+{% block simulators %} 
+    <h2>Список профессий</h2>
+
+    {% set prof_list = ['Каменотёс',
+        'Крановщик',
+        'Кровельщик',
+        'Кромкозакатчик',
+        'Кузнец',
+        'Лекальщик',
+        'Литейщик']%}
+
+    
+    {% if type_list == 'ol' %}
+        <ol>
+            {% for prof in prof_list%}
+                <li> {{prof}} </li>
+            {% endfor %}
+        </ol>
+        
+    {% elif type_list == 'ul' %}
+        <ul>
+            {% for prof in prof_list%}
+                <li> {{prof}} </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    
+{% endblock %}
