@@ -11,7 +11,10 @@ class User(SqlAlchemyBase):
                            primary_key=True, autoincrement=True)
     name = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     surname = sqlalchemy.Column(sqlalchemy.String)
-
+    age = sqlalchemy.Column(sqlalchemy.Integer)
+    position = sqlalchemy.Column(sqlalchemy.String)
+    speciality = sqlalchemy.Column(sqlalchemy.String)
+    address = sqlalchemy.Column(sqlalchemy.String)
 
     about = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     email = sqlalchemy.Column(sqlalchemy.String,
