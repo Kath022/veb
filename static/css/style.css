@@ -6,3 +6,7 @@ h4 {
 .data_pers{
   margin-left: 40px;
 }
+
+.combo{
+  display: inline-block;
+}
