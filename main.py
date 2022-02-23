@@ -1,60 +1,40 @@
-from flask import Flask, render_template, url_for, redirect
-from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
-from wtforms.validators import DataRequired
+from flask import Flask
+from data import db_session
+from data.users import User
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 
-@app.route('/<title>')
-@app.route('/index/<title>')
-def index(title):
-    return render_template('template.html', title=title)
+
+def main():
+    db_session.global_init("db/blogs.sqlite")
+    # app.run()
+
+    user = User()
+    user.surname = 'Scott'
+    user.name = "Ridley"
+
+    user.about = "биография пользователя 1"
+    user.email = "email@email.ru"
+    db_sess = db_session.create_session()
+    db_sess.add(user)
+    db_sess.commit()
 
 
-@app.route('/training/<prof>')
-def training(prof):
-    return render_template('engineer.html', title='Name', prof=prof)
-
-
-@app.route('/list_prof/<type_list>')
-def list_prof(type_list):
-    return render_template('list_prof.html', title='Name', type_list=type_list)
-
-
-autor_answer_data = {'title': 'title',
-    'surname': 'surname',
-    'name': 'name',
-    'education': 'education',
-    'profession': 'profession',
-    'sex': 'sex',
-    'motivation': 'motivation',
-    'ready': 'ready',
-}
-
-
-@ app.route('/answer')
-@ app.route('/auto_answer')
-def auto_answer():
-    return render_template('auto_answer.html', title=autor_answer_data['title'], autor_answer_data=autor_answer_data)
-
-
-class LoginForm(FlaskForm):
-    id_astronaut = StringField('id астронавта', validators=[DataRequired()])
-    password_astronaut = PasswordField('Пароль астронавта', validators=[DataRequired()])
-    id_capitan = StringField('id капитана', validators=[DataRequired()])
-    password_capitan = PasswordField('Пароль капитана', validators=[DataRequired()])
-
-    submit = SubmitField('Доступ')
-
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        return redirect('/success')
-    return render_template('login.html', title='Авторизация', form=form)
+    # new = False
+    # db_sess = db_session.create_session()
+    # if new:
+    #     for i in range(3):
+    #         user = User()
+    #         user.name = f"Пользователь {i}"
+    #         user.about = f"биография пользователя {i}"
+    #         user.email = f"email{str(i) * 5}@email.ru"
+    #         db_sess.add(user)
+    # db_sess.commit()
+    #
+    # for user in db_sess.query(User).all():
+    #     print(user.name)
 
 
 if __name__ == '__main__':
-    app.run(port=8080, host='127.0.0.1')
+    main()
