@@ -1,0 +1,33 @@
+{% extends 'template.html' %}
+
+{% block simulators %} 
+    <h1 style="text-align: center;">Works log</h1>
+    {% for job in jobs %}
+        <h1>Action # {{loop.index}}</h1>
+        <table>
+            <thead>
+            <tr>
+                <th>Title of activity</th>
+                <th>Team leader</th>
+                <th>Duration</th>
+                <th>List of collaboration</th>
+                <th>Id finished</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{job.job}}</td>
+                    <td>{{job.user.surname}} {{job.user.name}}</td>
+                    <td>{{job.work_size}}</td>
+                    <td>{{job.collaborators}}</td>
+                    {% if job.is_finished %}
+                        <td class="tab_tf">Is finished</td>
+                    {% else %}
+                        <td class="tab_tf">Is not finished</td>
+                    {% endif %}
+                </tr>
+            </tbody>
+        </table>
+    {% endfor %}
+
+{% endblock %}

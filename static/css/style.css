@@ -10,3 +10,20 @@ h4 {
 .combo{
   display: inline-block;
 }
+
+table{
+  text-align: center;
+  width: 100%;
+}
+
+th{
+  background-color: lightgray;
+}
+
+td{
+  background-color: lightblue;
+}
+
+.tab_tf{
+  background-color: bisque;
+}
