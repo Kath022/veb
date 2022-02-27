@@ -1,9 +1,7 @@
-from flask import Flask
-from data.users import User
-from data.db_session import global_init, create_session
 
-# app = Flask(__name__)
-# app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
+from data.users import User
+from data.jobs import Jobs
+from data.db_session import global_init, create_session
 
 
 def main():
@@ -12,10 +10,10 @@ def main():
     global_init(db_name)
     db_sess = create_session()
 
-    for user in db_sess.query(User).filter(User.address == 'module_1',
-                                           User.speciality.notlike('engineer'),
-                                           User.position.notlike('engineer')):
-        print(user.id)
+    for user in db_sess.query(User).filter(User.address == 'module_1', User.age >= 21):
+        print(user)
+        user.address = 'module_3'
+    db_sess.commit()
 
 
 if __name__ == '__main__':
