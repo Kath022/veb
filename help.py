@@ -1,6 +1,6 @@
 
 from data.users import User
-from data.jobs import Jobs
+from data.job import Jobs
 from data.db_session import global_init, create_session
 
 
