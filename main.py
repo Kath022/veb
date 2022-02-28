@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect
+from flask import Flask, render_template, redirect, request, abort
 from data import db_session
 from data.users import User
 from data.job import Jobs
@@ -98,6 +98,53 @@ def add_job():
     return render_template('add_job.html', title='Add a Job', form=form)
 
 
+@login_required
+@app.route('/add_job/<int:id>',  methods=['GET', 'POST'])
+def edit_job(id):
+    form = JobForm()
+    if request.method == 'GET':
+        db_sess = db_session.create_session()
+        job = db_sess.query(Jobs).filter(Jobs.id == id,
+                                         Jobs.user == current_user
+                                         ).first()
+        if job:
+            form.title.data = job.job
+            form.team_leader_id.data = job.team_leader
+            form.duration.data = job.work_size
+            form.list_of_collaboration.data = job.collaborators
+            form.is_finished.data = job.is_finished
+        else:
+            abort(404)
+    if form.validate_on_submit():
+        db_sess = db_session.create_session()
+        job = db_sess.query(Jobs).filter(Jobs.id == id,
+                                         Jobs.user == current_user
+                                         ).first()
+        if job:
+            job.job = form.title.data
+            job.team_leader = form.team_leader_id.data
+            job.work_size = form.duration.data
+            job.collaborators = form.list_of_collaboration.data
+            job.is_finished = form.is_finished.data
+        else:
+            abort(404)
+        db_sess.commit()
+    return render_template('add_job.html', title='Edit Job', form=form)
+
+
+@app.route('/job_delete/<int:id>', methods=['GET', 'POST'])
+@login_required
+def news_delete(id):
+    db_sess = db_session.create_session()
+    job = db_sess.query(Jobs).filter(Jobs.id == id,
+                                      Jobs.user == current_user
+                                      ).first()
+    if job:
+        db_sess.delete(job)
+        db_sess.commit()
+    else:
+        abort(404)
+    return redirect('/')
 
 
 def main():
