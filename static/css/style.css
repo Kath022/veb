@@ -32,3 +32,7 @@ td{
   margin:auto;
   width: 50%;
 }
+
+.alert alert-secondary{
+  display: inline-block;
+}
