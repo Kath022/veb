@@ -31,6 +31,9 @@
                 </tr>
             </tbody>
         </table>
+        {% if current_user.is_authenticated and (current_user == job.user or current_user.id == 1)%}
+            <a href="add_job" class="btn btn-secondary">Добавить работу</a>
+        {% endif %}
     {% endfor %}
 
 {% endblock %}

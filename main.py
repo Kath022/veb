@@ -77,23 +77,27 @@ def logout():
     return redirect("/")
 
 
-@app.route('/add_job')
+@login_required
+@app.route('/add_job',  methods=['GET', 'POST'])
 def add_job():
     form = JobForm()
     if form.validate_on_submit():
         db_sess = db_session.create_session()
+        print(form.is_finished.data)
         job = Jobs(
-            job=form.title,
-            team_leader=form.team_leader_id,
-            work_size=form.duration,
-            collaborators=form.list_of_collaboration,
-            is_finished=form.is_finished
+            job=form.title.data,
+            team_leader=form.team_leader_id.data,
+            work_size=form.duration.data,
+            collaborators=form.list_of_collaboration.data,
+            is_finished=form.is_finished.data
         )
         current_user.jobs.append(job)
         db_sess.merge(current_user)
         db_sess.commit()
         return redirect('/')
     return render_template('add_job.html', title='Add a Job', form=form)
+
+
 
 
 def main():
