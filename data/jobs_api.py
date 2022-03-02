@@ -26,6 +26,36 @@ def get_news():
     )
 
 
+@blueprint.route('/api/jobs/<int:job_id>', methods=['POST'])
+def edit_job(job_id):
+    if not request.json:
+        return jsonify({'error': 'Empty request'})
+
+    db_sess = db_session.create_session()
+    job = db_sess.query(Jobs).get(job_id)
+    if not job:
+        return flask.jsonify({'error': 'Not found'})
+    edited_job = {
+        'team_leader': job.team_leader,
+        'job': job.job,
+        'work_size': job.work_size,
+        'collaborators': job.collaborators,
+        'is_finished': job.is_finished
+    }
+    for key in ['team_leader', 'job',
+                  'work_size', 'collaborators', 'is_finished']:
+        if key in request.json:
+            edited_job[key] = request.json[key]
+
+    job.team_leader = edited_job['team_leader']
+    job.job = edited_job['job']
+    job.work_size = edited_job['work_size']
+    job.collaborators = edited_job['collaborators']
+    job.is_finished = edited_job['is_finished']
+    db_sess.commit()
+    return jsonify({'success': 'OK'})
+
+
 @blueprint.route('/api/jobs', methods=['POST'])
 def create_job():
     if not request.json:
@@ -78,3 +108,5 @@ def get_one_job(job_id):
                     'start_date', 'end_date', 'is_finished'))
         }
     )
+
+
