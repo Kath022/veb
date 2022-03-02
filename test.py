@@ -1,30 +1,11 @@
-from requests import get, post
+from requests import get, post, delete
 
-# пустой запрос
-print(post('http://localhost:5000/api/jobs').json())
-# некоректный запрос
-print(post('http://localhost:5000/api/jobs', json={
-               'id': '8',
-               'team_leader': '1',
-               'job': 'rere',
-               'work_size': 2,}).json())
 
-# уже есть индекст
-print(post('http://localhost:5000/api/jobs',
-           json={
-               'id': '1',
-               'team_leader': '1',
-               'job': 'rere',
-               'work_size': 2,
-               'collaborators': '2, 1',
-               'is_finished': True}).json())
+print(get('http://localhost:5000/api/jobs').json())
 
-# корректно
-print(post('http://localhost:5000/api/jobs',
-           json={
-               'id': '13',
-               'team_leader': '1',
-               'job': 'rere',
-               'work_size': 2,
-               'collaborators': '2, 1',
-               'is_finished': True}).json())
+# индекса нет
+print(delete('http://localhost:5000/api/jobs/9').json())
+# удалил верно
+print(get('http://localhost:5000/api/jobs').json())
+
+print(delete('http://localhost:5000/api/jobs/9').json())
