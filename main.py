@@ -1,9 +1,11 @@
-from flask import Flask, render_template, redirect, abort, request
+from flask import Flask, render_template, redirect, \
+    abort, request, make_response, jsonify
 from data import db_session
 from data.users import User
 from data.news import News
 from forms.user import RegisterForm, LoginForm
 from forms.news import NewsForm
+from data import db_session, news_api
 
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 
@@ -13,6 +15,11 @@ app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 
 login_manager = LoginManager()
 login_manager.init_app(app)
+
+
+@app.errorhandler(404)
+def not_found(error):
+    return make_response(jsonify({'error': 'Not found'}), 404)
 
 
 @login_manager.user_loader
@@ -150,7 +157,7 @@ def reqister():
 
 def main():
     db_session.global_init("db/blogs.sqlite")
-
+    app.register_blueprint(news_api.blueprint)
     # new = False
     # db_sess = db_session.create_session()
     # if new:
