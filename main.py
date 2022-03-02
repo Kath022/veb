@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request, abort
+from flask import Flask, render_template, redirect, request, abort, make_response, jsonify
 from data import db_session
 from data.users import User
 from data.job import Jobs
@@ -6,12 +6,19 @@ from forms.user import RegisterForm, LoginForm
 from forms.jobs import JobForm
 import datetime
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
+from data import db_session, jobs_api
 
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 login_manager = LoginManager()
 login_manager.init_app(app)
+
+
+
+@app.errorhandler(404)
+def not_found(error):
+    return make_response(jsonify({'error': 'Not found'}), 404)
 
 
 @login_manager.user_loader
@@ -151,6 +158,7 @@ def main():
     # db_name = input()
     db_name = "db/blogs.sqlite"
     db_session.global_init(db_name)
+    app.register_blueprint(jobs_api.blueprint)
     app.run()
 
     db_sess = db_session.create_session()
