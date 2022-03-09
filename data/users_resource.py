@@ -40,7 +40,6 @@ parser.add_argument('address', required=True)
 
 class UsersListResource(Resource):
     def get(self):
-        print(1111111111111111111111111)
         session = db_session.create_session()
         users = session.query(User).all()
         return jsonify({'users': [user.to_dict(

@@ -1,5 +1,5 @@
 from flask import Flask, render_template, redirect, request, abort, make_response, jsonify
-from data import db_session, users_resource
+from data import db_session, users_resource, jobs_resource
 from data.users import User
 from data.job import Jobs
 from forms.user import RegisterForm, LoginForm
@@ -18,6 +18,9 @@ login_manager.init_app(app)
 
 api.add_resource(users_resource.UsersListResource, '/api/v2/users')
 api.add_resource(users_resource.UsersResource, '/api/v2/users/<int:user_id>')
+
+api.add_resource(jobs_resource.JobsResource, '/api/v2/jobs/<int:job_id>')
+api.add_resource(jobs_resource.JobsListResource, '/api/v2/jobs')
 
 
 @app.errorhandler(404)
