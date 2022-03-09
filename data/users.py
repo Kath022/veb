@@ -9,7 +9,7 @@ from sqlalchemy_serializer import SerializerMixin
 
 class User(SqlAlchemyBase, UserMixin, SerializerMixin):
     __tablename__ = 'users'
-
+    # id name surname age position speciality address
     id = sqlalchemy.Column(sqlalchemy.Integer,
                            primary_key=True, autoincrement=True)
     name = sqlalchemy.Column(sqlalchemy.String, nullable=True)
